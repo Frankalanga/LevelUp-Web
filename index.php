@@ -55,9 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="author" content="Level UP Repairs">
     <title>Level UP Repairs</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Aquí va el CSS que ya incluiste */
-    </style>
 </head>
 <body>
 
