@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,103 +7,8 @@
     <meta name="author" content="Level UP Repairs">
     <title>Level UP Repairs</title>
     <link rel="stylesheet" href="css/styles.css">
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1c1c1c;
-            color: #f4f4f4;
-        }
-        header {
-            background-color:  #1c1c1c;
-            color: #00ffae;
-            text-align: center;
-            padding: 1px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-        header p {
-            font-size: 1.2em;
-            margin: 0;
-        }
-        nav {
-            background-color: #444;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            padding: 14px 20px;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        nav a:hover {
-            background-color: #00ffae;
-            color: #1c1c1c;
-        }
-        section {
-            padding: 40px 20px;
-            margin: 20px;
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        section h2 {
-            color: #ffffff;
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .services, .contact {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .service-item, .contact-item {
-            background-color: #1c1c1c;
-            color: #f4f4f4;
-            padding: 20px;
-            margin: 10px;
-            width: 30%;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .service-item:hover, .contact-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-        }
-        .service-item h3, .contact-item h3 {
-            color:  #ffffff;
-            margin-bottom: 10px;
-        }
-        footer {
-            background-color: #333;
-            color: #ffffffc5;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-        }
-        footer p {
-            margin: 0;
-        }
-    </style>
 </head>
 <body>
-
-   
-
     <header>
         <img src="LevelUp_Repairs.jpg" alt="Level UP Repairs Logo">
     </header>
@@ -157,39 +60,32 @@
                 <p>+34 622 298 076</p>
             </div>
             <div class="contact-item">
-                <h3 style=" padding: 15px">Correo electrónico</h3>
+                <h3>Correo electrónico</h3>
                 <p>Leveluprepairs@gmail.com</p>
             </div>
             <div class="contact-item">
-                <h3 style=" padding:8px">WhatsApp</h3>
+                <h3>WhatsApp</h3>
                 <img src="QR Levelup.png" alt="Código QR de WhatsApp" style="max-width: 50%; border-radius: 0px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);">
             </div>
         </div>
-    
-        <!-- Formulario para consultas -->
+
         <h3>Envíanos tu consulta</h3>
-        <form id="consulta-form" action="submit_consulta.php" method="POST" style="margin-top: 20px;">
-            <label for="nombre" style="display: block; margin-bottom: 10px;">Tu nombre:</label>
-            <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre" 
-                   style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc;">
+        <form id="consulta-form" action="submit_consulta.php" method="POST">
+            <label for="nombre">Tu nombre:</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre">
             
-            <label for="email" style="display: block; margin-bottom: 10px;">Tu correo electrónico:</label>
-            <input type="email" id="email" name="email" required placeholder="Escribe tu correo electrónico" 
-                   style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc;">
+            <label for="email">Tu correo electrónico:</label>
+            <input type="email" id="email" name="email" required placeholder="Escribe tu correo electrónico">
             
-            <label for="consulta" style="display: block; margin-bottom: 10px;">Tu consulta:</label>
-            <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..." rows="5" 
-                      style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+            <label for="consulta">Tu consulta:</label>
+            <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..." rows="5"></textarea>
             
-            <button type="submit" style="background-color: #7d4fc9; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                Enviar consulta
-            </button>
+            <button type="submit">Enviar consulta</button>
         </form>
     </section>
 
     <footer>
         <p>&copy; 2025 Level UP Repairs. Todos los derechos reservados.</p>
     </footer>
-
 </body>
 </html>
