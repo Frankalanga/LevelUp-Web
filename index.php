@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
     <header>
         <img src="LevelUp_Repairs.jpg" alt="Level UP Repairs Logo">
     </header>
@@ -70,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <section id="home">
-        <h2>Bienvenidos a Level UP Repairs</h2>
+        <h2>Bienvenidos a Level UP Repairs</h2> 
         <p>En Level UP Repairs nos especializamos en ofrecer soluciones de reparación electrónica de alta calidad. Ya sea que necesites reparar tu teléfono, computadora o cualquier otro dispositivo electrónico, ¡nosotros podemos ayudarte!</p>
     </section>
 
@@ -101,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Contacto</h2>
         <div class="contact">
             <div class="contact-item">
-                <h3>Ubicación</h3>
+                <h3>Ubicacion</h3>
                 <p>Getafe, Las Margaritas</p>
             </div>
             <div class="contact-item">
@@ -114,18 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="contact-item">
                 <h3>WhatsApp</h3>
-                <img src="QR Levelup.png" alt="Código QR de WhatsApp" style="max-width: 50%;">
+                <img src="QR Levelup.png" alt="Código QR de WhatsApp" style="max-width: 50%; border-radius: 0px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);">
             </div>
         </div>
-        
-        <!-- Mostrar mensaje -->
-        <?php if (!empty($mensaje)) : ?>
-            <p style="color: green; text-align: center;"><?= htmlspecialchars($mensaje) ?></p>
-        <?php endif; ?>
 
-        <!-- Formulario para consultas -->
         <h3>Envíanos tu consulta</h3>
-        <form id="consulta-form" action="" method="POST" style="margin-top: 20px;">
+        <form id="consulta-form" action="submit_consulta.php" method="POST">
             <label for="nombre">Tu nombre:</label>
             <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre">
             
@@ -133,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="email" id="email" name="email" required placeholder="Escribe tu correo electrónico">
             
             <label for="consulta">Tu consulta:</label>
-            <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..."></textarea>
+            <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..." rows="5"></textarea>
             
             <button type="submit">Enviar consulta</button>
         </form>
