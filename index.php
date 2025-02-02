@@ -10,7 +10,7 @@ try {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
             email TEXT NOT NULL,
-            telefono TEXT NOT NULL,  
+            telefono TEXT NOT NULL,
             consulta TEXT NOT NULL,
             fecha DATETIME DEFAULT CURRENT_TIMESTAMP
         )
@@ -24,14 +24,17 @@ $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'] ?? '';
     $email = $_POST['email'] ?? '';
-    $telefono = $_POST['telefono'] ?? ''; 
+    $telefono = $_POST['telefono'] ?? '';
     $consulta = $_POST['consulta'] ?? '';
 
-    if (!empty($nombre) && !empty($email) && !empty($consulta)) {
+    // Validar el número de teléfono (ejemplo: debe tener 9 dígitos)
+    if (!preg_match('/^\d{9}$/', $telefono)) {
+        $mensaje = "El número de teléfono debe tener 9 dígitos.";
+    } elseif (!empty($nombre) && !empty($email) && !empty($consulta)) {
         try {
             $stmt = $db->prepare("
-                INSERT INTO consultas (nombre, email, consulta) 
-                VALUES (:nombre, :email, :consulta)
+                INSERT INTO consultas (nombre, email, telefono, consulta) 
+                VALUES (:nombre, :email, :telefono, :consulta)
             ");
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':email', $email);
@@ -47,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensaje = "Por favor, completa todos los campos.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-    <script src= "Script/Script.js" ></script>></script>
+    <script src="Script/Script.js"></script>
     <header>
         <img src="LevelUp_Repairs.jpg" alt="Level UP Repairs Logo">
     </header>
@@ -123,23 +127,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <h3>Envíanos tu consulta</h3>
-        <form id="consulta-form"  method="POST">
+        <?php if (!empty($mensaje)): ?>
+        <div class="mensaje <?php echo (strpos($mensaje, 'Error') !== false) ? 'error' : 'success'; ?>">
+            <?php echo htmlspecialchars($mensaje); ?>
+        </div>
+         <?php endif; ?>
+        <form id="consulta-form" method="POST">
             <label for="nombre">Tu nombre:</label>
             <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre">
             
             <label for="email">Tu correo electrónico:</label>
             <input type="email" id="email" name="email" required placeholder="Escribe tu correo electrónico">
             
-            
             <label for="telefono">Tu número de teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required placeholder="Escribe tu número de teléfono" pattern="[0-9]{9}">
+            <input type="tel" id="telefono" name="telefono" required placeholder="Escribe tu número de teléfono">
             
             <label for="consulta">Tu consulta:</label>
             <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..." rows="5"></textarea>
-    
+            
             <button type="submit" id="DataSubmit">Enviar consulta</button>
-</form>
+        </form>
     </section>
+
 
     <footer>
         <p>&copy; 2025 Level UP Repairs. Todos los derechos reservados.</p>
