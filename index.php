@@ -10,6 +10,7 @@ try {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
             email TEXT NOT NULL,
+            telefono TEXT NOT NULL,  
             consulta TEXT NOT NULL,
             fecha DATETIME DEFAULT CURRENT_TIMESTAMP
         )
@@ -23,6 +24,7 @@ $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'] ?? '';
     $email = $_POST['email'] ?? '';
+    $telefono = $_POST['telefono'] ?? ''; 
     $consulta = $_POST['consulta'] ?? '';
 
     if (!empty($nombre) && !empty($email) && !empty($consulta)) {
@@ -33,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':telefono', $telefono);
             $stmt->bindParam(':consulta', $consulta);
             $stmt->execute();
 
@@ -57,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+    <script src= "Script/Script.js" ></script>></script>
     <header>
         <img src="LevelUp_Repairs.jpg" alt="Level UP Repairs Logo">
     </header>
@@ -118,18 +123,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <h3>Envíanos tu consulta</h3>
-        <form id="consulta-form" action="submit_consulta.php" method="POST">
+        <form id="consulta-form"  method="POST">
             <label for="nombre">Tu nombre:</label>
             <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre">
             
             <label for="email">Tu correo electrónico:</label>
             <input type="email" id="email" name="email" required placeholder="Escribe tu correo electrónico">
             
+            
+            <label for="telefono">Tu número de teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="Escribe tu número de teléfono" pattern="[0-9]{9}">
+            
             <label for="consulta">Tu consulta:</label>
             <textarea id="consulta" name="consulta" required placeholder="Escribe tu consulta aquí..." rows="5"></textarea>
-            
-            <button type="submit">Enviar consulta</button>
-        </form>
+    
+            <button type="submit" id="DataSubmit">Enviar consulta</button>
+</form>
     </section>
 
     <footer>
