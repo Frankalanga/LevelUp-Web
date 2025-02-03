@@ -1,4 +1,5 @@
 <?php
+
 // Conexión a la base de datos SQLite
 try {
     $db = new PDO('sqlite:levelup_repairs.db');
@@ -21,17 +22,29 @@ try {
 
 // Procesar el formulario si se envía
 $mensaje = '';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'] ?? '';
     $email = $_POST['email'] ?? '';
     $telefono = $_POST['telefono'] ?? '';
     $consulta = $_POST['consulta'] ?? '';
 
-    // Validar el número de teléfono (ejemplo: debe tener 9 dígitos)
+    // Limpia el número de teléfono: elimina todo excepto dígitos
+    $telefono = preg_replace('/[^0-9]/', '', $telefono);
+
+    // Validar el número de teléfono (debe tener 9 dígitos)
     if (!preg_match('/^\d{9}$/', $telefono)) {
         $mensaje = "El número de teléfono debe tener 9 dígitos.";
     } elseif (!empty($nombre) && !empty($email) && !empty($consulta)) {
         try {
+            // Inserta la consulta en la base de datos
             $stmt = $db->prepare("
                 INSERT INTO consultas (nombre, email, telefono, consulta) 
                 VALUES (:nombre, :email, :telefono, :consulta)
@@ -42,9 +55,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':consulta', $consulta);
             $stmt->execute();
 
+            // Configura PHPMailer
+            $mail = new PHPMailer(true);
+
+            // Configuración del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; // Cambia esto por tu servidor SMTP
+            $mail->SMTPAuth = true;
+            $mail->Username = 'leveluprepairsesp@gmail.com'; // Cambia esto por tu correo
+            $mail->Password = 'cqbx cyfy gjis ymoa'; // Cambia esto por tu contraseña
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // O PHPMailer::ENCRYPTION_SMTPS
+            $mail->Port = 587; // Puerto SMTP (587 para TLS, 465 para SSL)
+
+            // Remitente y destinatario
+            $mail->setFrom('no-reply@levelUp.com', 'Level UP Repairs');
+            $mail->addAddress('leveluprepairsesp@gmail.com'); // Cambia esto por tu correo
+
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = "Nueva consulta de $nombre";
+            $mail->Body = "
+                <h1>Nueva consulta/reparacion recibida</h1>
+                <p><strong>Nombre:</strong> $nombre</p>
+                <p><strong>Email:</strong> $email</p>
+                <p><strong>Teléfono:</strong> $telefono</p>
+                <p><strong>Consulta:</strong> $consulta</p>
+            ";
+
+            // Envía el correo
+            $mail->send();
             $mensaje = "Consulta enviada correctamente. Nos pondremos en contacto contigo pronto.";
         } catch (Exception $e) {
-            $mensaje = "Error al guardar la consulta: " . $e->getMessage();
+            $mensaje = "Error al enviar el correo: " . $mail->ErrorInfo;
         }
     } else {
         $mensaje = "Por favor, completa todos los campos.";
